@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "langfuse-traces": {
+      "command": "python",
+      "args": ["-m", "langfuse_traces_mcp.server"],
+      "cwd": "d:\\developer\\Skill to fetch traces",
+      "env": {
+        "PYTHONPATH": "d:\\developer\\Skill to fetch traces\\src"
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "langfuse-traces-mcp"
+version = "0.1.0"
+description = "MCP server that fetches Langfuse traces and provides them as context to VS Code coding agents."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    { name = "KD" },
+]
+maintainers = [
+    { name = "KD" },
+]
+keywords = ["langfuse", "mcp", "traces", "observability", "vscode"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Monitoring",
+]
+dependencies = [
+    "fastmcp>=3.2.0,<4",
+    "httpx>=0.27,<1",
+    "pydantic>=2.0,<3",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/langfuse-traces-mcp"
+Repository = "https://github.com/yourusername/langfuse-traces-mcp"
+Issues = "https://github.com/yourusername/langfuse-traces-mcp/issues"
+Changelog = "https://github.com/yourusername/langfuse-traces-mcp/blob/main/CHANGELOG.md"
+
+dependencies = [
+    "fastmcp>=3.2.0,<4",
+    "httpx>=0.27,<1",
+    "pydantic>=2.0,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "respx>=0.22",
+]
+
+[project.scripts]
+langfuse-traces-mcp = "langfuse_traces_mcp.server:main"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
