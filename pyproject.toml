@@ -45,6 +45,7 @@ Changelog = "https://github.com/KarandeepSinghSodhi/Skill-to-fetch-traces/blob/m
 dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.24",
+    "pytest-cov>=4.0",
     "respx>=0.22",
 ]
 
