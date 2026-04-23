@@ -91,6 +91,14 @@ def _format_observations(observations: list[dict]) -> str:
     return "\n\n---\n\n".join(sections)
 
 
+def _trace_matches_tags(trace: dict, required_tags: list[str]) -> bool:
+    """Check whether a trace matches tags from top-level or metadata tags."""
+    top_level_tags = trace.get("tags") or []
+    metadata_tags = (trace.get("metadata") or {}).get("tags") or []
+    merged = set(top_level_tags) | set(metadata_tags)
+    return all(tag in merged for tag in required_tags)
+
+
 # ---------------------------------------------------------------------------
 # Tools
 # ---------------------------------------------------------------------------
@@ -159,9 +167,25 @@ async def fetch_langfuse_traces(
     except Exception as e:
         return f"❌ **Validation error:** {e}"
 
+    used_metadata_tag_fallback = False
+
     try:
         async with LangfuseClient(credentials) as client:
             result = await client.list_traces(filters)
+            traces = result.get("data", [])
+
+            # Fallback path: some SDK paths store tags in metadata only.
+            # If API tag filtering returns no traces, re-fetch without tags
+            # and filter locally against metadata.tags as well.
+            if tags and not traces:
+                fallback_filters = filters.model_copy(update={"tags": None})
+                fallback_result = await client.list_traces(fallback_filters)
+                fallback_traces = fallback_result.get("data", [])
+                filtered_traces = [t for t in fallback_traces if _trace_matches_tags(t, tags)]
+
+                result = fallback_result
+                result["data"] = filtered_traces
+                used_metadata_tag_fallback = True
     except LangfuseAPIError as e:
         return f"❌ **Langfuse API error ({e.status_code}):** {e.detail}"
     except Exception as e:
@@ -183,6 +207,11 @@ async def fetch_langfuse_traces(
     if active_filters:
         filter_strs = [f"`{k}={v}`" for k, v in active_filters.items()]
         output_parts.append(f"**Active filters:** {', '.join(filter_strs)}\n")
+    if used_metadata_tag_fallback:
+        output_parts.append(
+            "_Note: tag matching used metadata fallback (`metadata.tags`) "
+            "because API tag filtering returned no rows._\n"
+        )
 
     for trace in traces:
         output_parts.append(_format_trace_summary(trace))
