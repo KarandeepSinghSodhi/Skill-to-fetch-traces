@@ -41,12 +41,6 @@ Repository = "https://github.com/KarandeepSinghSodhi/Skill-to-fetch-traces"
 Issues = "https://github.com/KarandeepSinghSodhi/Skill-to-fetch-traces/issues"
 Changelog = "https://github.com/KarandeepSinghSodhi/Skill-to-fetch-traces/blob/main/CHANGELOG.md"
 
-dependencies = [
-    "fastmcp>=3.2.0,<4",
-    "httpx>=0.27,<1",
-    "pydantic>=2.0,<3",
-]
-
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
