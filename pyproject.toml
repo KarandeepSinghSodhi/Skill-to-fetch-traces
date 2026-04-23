@@ -36,10 +36,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/langfuse-traces-mcp"
-Repository = "https://github.com/yourusername/langfuse-traces-mcp"
-Issues = "https://github.com/yourusername/langfuse-traces-mcp/issues"
-Changelog = "https://github.com/yourusername/langfuse-traces-mcp/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/YOUR_USERNAME/langfuse-traces-mcp"
+Repository = "https://github.com/YOUR_USERNAME/langfuse-traces-mcp"
+Issues = "https://github.com/YOUR_USERNAME/langfuse-traces-mcp/issues"
+Changelog = "https://github.com/YOUR_USERNAME/langfuse-traces-mcp/blob/main/CHANGELOG.md"
 
 dependencies = [
     "fastmcp>=3.2.0,<4",
